@@ -40,7 +40,7 @@ class ShareRepository {
         FROM shared_snippets ss
         JOIN snippets s ON s.id = ss.snippet_id
         LEFT JOIN categories c ON s.id = c.snippet_id
-        WHERE ss.id = ? AND ss.expiry_date IS NULL
+        WHERE ss.id = ? AND s.expiry_date IS NULL
         GROUP BY s.id
       `);
 
