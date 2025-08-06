@@ -1,20 +1,32 @@
 services:
   server:
+    container_name: bytestash
     build:
       context: .
       dockerfile: Dockerfile
+    healthcheck:
+      test:
+        - CMD
+        - wget
+        - --spider
+        - --timeout=10
+        - bytestash:5000
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5013:5000"
     environment:
       # e.g. write /bytestash for a domain such as my.domain/bytestash, leave blank in every other case
       - BASE_PATH=
       # Either provide JWT_SECRET directly or use JWT_SECRET_FILE for Docker secrets
-      #- JWT_SECRET_FILE=/run/secrets/jwt
-      - JWT_SECRET=your-secret
+      - JWT_SECRET_FILE=/run/secrets/bytestash_jwt
+      #- JWT_SECRET=your-secret
       # how long the token lasts, examples: "2 days", "10h", "7d", "1m", "60s"
       - TOKEN_EXPIRY=24h
       # is this bytestash instance open to new accounts being created?
-      - ALLOW_NEW_ACCOUNTS=true
+      - ALLOW_NEW_ACCOUNTS=false
       # Should debug mode be enabled? Essentially enables logging, in most cases leave this as false
       - DEBUG=false
       # Should we use accounts at all? When enabled, it will be like starting a fresh account so export your snippets, no login required
@@ -39,9 +51,15 @@ services:
     volumes:
       - ./data:/data/snippets
 # Uncomment to use docker secrets
-#    secrets:
-#      - jwt
+    secrets:
+      - bytestash_jwt
+    networks:
+      - overlay-proxy-network
 
-#secrets:
-#  jwt:
-#    file: ./secrets/jwt.txt
+secrets:
+  bytestash_jwt:
+    file: ./secrets/jwt.txt
+
+networks:
+  overlay-proxy-network:
+    external: true
