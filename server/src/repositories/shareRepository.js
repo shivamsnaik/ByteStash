@@ -150,7 +150,6 @@ class ShareRepository {
       if (isNaN(snippetIdInt)) {
         throw new Error('Invalid snippet ID');
       }
-      Logger.debug(this.getSharesBySnippetIdStmt)
       return this.getSharesBySnippetIdStmt.all(snippetIdInt, userId);
     } catch (error) {
       Logger.error('Error in getSharesBySnippetId:', error);
