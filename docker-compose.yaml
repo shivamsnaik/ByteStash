@@ -4,6 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    user: 1000:1000
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
     healthcheck:
       test:
         - CMD
