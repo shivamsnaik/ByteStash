@@ -11,3 +11,4 @@ docker-compose-dev.yaml
 example-fragment.js
 
 secrets
+.env
