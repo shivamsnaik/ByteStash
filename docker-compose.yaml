@@ -44,15 +44,15 @@ services:
       # Optional: Enable OIDC for Single Sign On
       - OIDC_ENABLED=true
       # Optional: Display name for users signing in with SSO, will default to Single Sign-on
-      - OIDC_DISPLAY_NAME=
+      - OIDC_DISPLAY_NAME=${OIDC_DISPLAY_NAME}
       # Your OIDC issuer url, e.g. https://authentik.mydomain.com/application/o/bytestash/ for authentik
-      - OIDC_ISSUER_URL=
+      - OIDC_ISSUER_URL=${OIDC_ISSUER_URL}
       # Your OIDC client ID, you can find it in your app provider
-      - OIDC_CLIENT_ID=
+      - OIDC_CLIENT_ID=${OIDC_CLIENT_ID}
       # Your OIDC client secret, again, found in the app provider
-      - OIDC_CLIENT_SECRET=
+      - OIDC_CLIENT_SECRET=${OIDC_CLIENT_SECRET}
       # The OIDC scopes to request, e.g. "openid profile email groups"
-      - OIDC_SCOPES=
+      - OIDC_SCOPES=${OIDC_SCOPES}
     volumes:
       - ./data:/data/snippets
 # Uncomment to use docker secrets
